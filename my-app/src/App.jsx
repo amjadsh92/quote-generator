@@ -8,7 +8,7 @@ import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
 import { faTwitter, faTumblr } from "@fortawesome/free-brands-svg-icons";
 
 function App() {
-  const [body, setBody] = useState({ color: "body-color" });
+  const [background, setBackground] = useState({ color: "body-color" });
   const [isLoaded, setIsLoaded] = useState(false);
   const [allQuotes, setAllQuotes] = useState([]);
 
@@ -31,9 +31,9 @@ function App() {
   }, []);
 
   return (
-    <div className={`background h-100 min-vh-100 w-100 p-1px  ${body.color}`}>
+    <div className={`background h-100 min-vh-100 w-100 p-1px  ${background.color}`}>
       <QuoteBox
-        updateBody={setBody}
+        updateBackground={setBackground}
         allQuotes={allQuotes}
         isLoaded={isLoaded}
       />
@@ -43,12 +43,14 @@ function App() {
 
 export default App;
 
-function QuoteBox({ updateBody, allQuotes, isLoaded }) {
+function QuoteBox({ updateBackground, allQuotes, isLoaded }) {
   const [quoteBox, setQuoteBox] = useState({
     quote: "",
     author: "",
     backgroundColor: "body-color",
     quoteTextColor: "text-color",
+    quoteIndex: 0,
+    colorIndex:0
   });
   const [isFading, setIsFading] = useState(false);
   const [hideQuote, setHideQuote] = useState(true);
@@ -74,15 +76,20 @@ function QuoteBox({ updateBody, allQuotes, isLoaded }) {
   ];
 
   const updateQuoteBox = () => {
+    let repeat = true;
+    while(repeat){
     let indQuote = Math.floor(Math.random() * allQuotes.length);
-    let quote = allQuotes[indQuote]?.quote || "";
-    let author = allQuotes[indQuote]?.author || "";
     let indColor = Math.floor(Math.random() * backgroundColors.length);
-    let backgroundColor = backgroundColors[indColor];
-    let quoteTextColor = textColors[indColor];
-
-    setQuoteBox({ quote, author, backgroundColor, quoteTextColor });
-    updateBody({ color: backgroundColor });
+    if(indQuote !== quoteBox.quoteIndex && indColor !== quoteBox.colorIndex){
+      repeat = false;
+      let quote = allQuotes[indQuote]?.quote || "";
+      let author = allQuotes[indQuote]?.author || "";
+      let backgroundColor = backgroundColors[indColor];
+      let quoteTextColor = textColors[indColor];
+      setQuoteBox({ quote, author, backgroundColor, quoteTextColor,quoteIndex: indQuote, colorIndex: indColor });
+      updateBackground({ color: backgroundColor });
+    }
+  }
   };
 
   useEffect(() => {
