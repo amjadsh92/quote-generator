@@ -95,3 +95,27 @@
 .bg-coral-red { background-color: rgb(251, 105, 100) !important; }
 .text-coral-red { color: rgb(251, 105, 100) !important; }
 
+
+
+@media screen and (max-width: 600px) {
+
+.quote-box{
+  padding:30px 30px 30px 30px;
+  
+}
+
+.w-500px{
+  width:80% !important
+}
+
+}  
+
+@media screen and (max-width: 400px) {
+
+
+
+.w-500px{
+  width:95% !important
+}
+
+}  
