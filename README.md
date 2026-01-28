@@ -1,4 +1,4 @@
-# QUote Generator
+# Quote Generator
 
 # Description
 
